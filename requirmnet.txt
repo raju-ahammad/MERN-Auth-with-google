@@ -1,0 +1,4 @@
+npm install express mongoose dotenv cors cookie-parser bcrypt jsonwebtoken cloudinary express-fileupload googleapis node-fetch
+nodemailer express-fileupload cloudinary
+
+npm i -D nodemon
