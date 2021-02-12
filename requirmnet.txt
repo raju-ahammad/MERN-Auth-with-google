@@ -2,3 +2,4 @@ npm install express mongoose dotenv cors cookie-parser bcrypt jsonwebtoken cloud
 nodemailer express-fileupload cloudinary
 
 npm i -D nodemon
+npm i axios react-router-dom redux react-redux

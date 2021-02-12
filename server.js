@@ -14,10 +14,13 @@ app.use(fileUpload({
     useTempFiles: true
 }));
 
-app.use('/', (req, res, next) => {
-    res.json({msg: "hello jobup"})
-});
 
+//Routes
+
+app.use('/user', require('./routes/userRouter'))
+
+
+//connect mongodb
 const URI = process.env.MONGODB_URI
 
 mongoose.connect(URI, {
@@ -25,8 +28,8 @@ mongoose.connect(URI, {
     useFindAndModify: false,
     useNewUrlParser: true,
     useUnifiedTopology: true
-}, err=> {
-    if (err) throw err;
+}, err => {
+    if(err) throw err;
     console.log("connected to mongo db");
 })
 

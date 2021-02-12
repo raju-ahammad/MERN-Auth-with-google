@@ -1,4 +1,4 @@
-# MERN Stack - Ecommerce
+# MERN Stack - Job Search Project
 
 > Finally, I have perfected the user authentication page using the MERN Stack + Redux.
 > Include:
@@ -11,11 +11,11 @@
 >
 > * Below is the Demo link, if you find it interesting, please subscribe to the channel. I will be making a tutorial video in the near future. Thanks and have a good day!💓💓
 
-## Demo: https://devat-full-auth.herokuapp.com/
+## Demo:
 
-## Author: Dev AT
+## Author: Raju Ahammad
 
-## Youtube tutorials: https://youtu.be/npsi7ZkjvQo
+## Youtube tutorials:
 
 ## Install dependencies for server
 
