@@ -16,4 +16,7 @@ router.post('/forgotpassword', userController.forgotPassword)
 router.post('/resetpassword', auth,  userController.resetPassword)
 
 
+router.get('/infor', auth, userController.getUserInfor)
+
+
 module.exports = router;
