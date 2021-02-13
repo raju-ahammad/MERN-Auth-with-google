@@ -1,7 +1,8 @@
 const Users = require('../models/userModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
-const sendMail = require('./sendMail')
+const sendMail = require('./sendMail');
+const { reset } = require('nodemon');
 
 const {CLIENT_URL} = process.env
 
@@ -9,7 +10,7 @@ const userController = {
     register: async (req, res) => {
         try {
             const {name, email, password} = req.body;
-            console.log({name, email, password});
+            
             if (!name  || !email || !password) {
                 return res.json({msg: "please fill in all fields"})
             }
@@ -29,15 +30,108 @@ const userController = {
             const newUser = {
                 name, email, password: passwordHash
             }
-            
+            console.log({newUser});
             const activation_token = createActivationToken(newUser);
             const url = `${CLIENT_URL}/user/activate/${activation_token}`
-            sendMail(email, url)
+            sendMail(email, url, "please verify your email")
             res.json({msg: "Register Success! please active your mail to start"})
         } catch (err) {
             return res.status(500).json({msg: err.message})        }
+    },
+    activeEmail: async (req, res) => {
+        try {
+            const { activation_token } = req.body;
+            const user = jwt.verify(activation_token, process.env.ACTIVATION_TOKEN_SECRET)
+            
+            const { name, email, password } = user;
+            const checkMail = await Users.findOne({email});
+            if (checkMail) {
+                return res.status(400).json({msg: "this mail already exist"})
+            }
+
+            const newUser = new Users({
+                name, email, password
+            })
+
+            await newUser.save()
+
+            return res.json({msg: "Account has been activate "})
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    }, 
+    login: async (req, res) => {
+        try {
+            const {email, password} = req.body
+            const user = await Users.findOne({email})
+            if(!user) return res.status(400).json({msg: "This email does not exist."})
+
+            const isMatch = await bcrypt.compare(password, user.password)
+            if(!isMatch) return res.status(400).json({msg: "Password is incorrect."})
+
+            const refresh_token = createRefreshToken({id: user._id})
+            res.cookie('refreshtoken', refresh_token, {
+                httpOnly: true,
+                path: '/user/refresh_token',
+                maxAge: 7 * 24 * 60 * 60 * 1000 // 24 hours
+            })
+
+            res.json({msg: "Login success!"})
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+    getAccessToken: async (req, res) => {
+        try {
+            const rf_token = req.cookies.refreshtoken
+            if (!rf_token) return res.status(400).json({msg: "please log in now!"})
+             jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+                 if (err) return res.status(400).json({msg: "please log in now!"})
+                 const access_token = createAccessToken({id: user.id})
+                 res.json({access_token})
+             })
+            
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+    forgotPassword: async (req, res) => {
+        try {
+            const {email} = req.body;
+            const user = await Users.findOne({email});
+            if (!user) {
+                return res.status(400).json({msg: "this email does not exist"})
+            }
+
+            const access_token = createAccessToken({id: user._id});
+            console.log(access_token);
+            const url = `${CLIENT_URL}/user/reset/${access_token}`
+            sendMail(email, url, "Reset your password")
+            res.json({msg: "Resend the password, please check your email"})
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+    resetPassword : async (req, res) => {
+        try {
+            const {password} = req.body;
+            console.log("password",password);
+            const passwordHash = await bcrypt.hash(password, 12);
+
+            console.log(req.user);
+            await Users.findOneAndUpdate({ _id: req.user.id }, {
+                password: passwordHash
+            })
+
+            res.json({msg: "Password successfully changed"})
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
     }
 };
+
+
+
 
 function validateEmail(email) {
     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

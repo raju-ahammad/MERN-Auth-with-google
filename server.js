@@ -2,8 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser')
 const fileUpload = require('express-fileupload');
+const { get } = require('./routes/userRouter');
 
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(fileUpload({
 //Routes
 
 app.use('/user', require('./routes/userRouter'))
+
 
 
 //connect mongodb
