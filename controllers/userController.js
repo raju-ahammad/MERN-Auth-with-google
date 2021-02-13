@@ -30,7 +30,6 @@ const userController = {
             const newUser = {
                 name, email, password: passwordHash
             }
-            console.log({newUser});
             const activation_token = createActivationToken(newUser);
             const url = `${CLIENT_URL}/user/activate/${activation_token}`
             sendMail(email, url, "please verify your email")
@@ -115,7 +114,6 @@ const userController = {
     resetPassword : async (req, res) => {
         try {
             const {password} = req.body;
-            console.log("password",password);
             const passwordHash = await bcrypt.hash(password, 12);
 
             console.log(req.user);
@@ -133,6 +131,22 @@ const userController = {
             const user = await Users.findById(req.user.id).select('-password')
 
             res.json(user)
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+    getAlluserInfo: async (req, res) => {
+        try {
+            const users = await Users.find().select('-password')
+            res.json(users)
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+    logout: async (req, res) => {
+        try {
+            res.clearCookie('refreshtoken', {path: '/user/refresh_token'})
+            return res.json({msg: "Logged out"})
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }

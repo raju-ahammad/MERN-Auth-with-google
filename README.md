@@ -8,14 +8,10 @@
 > - Forgot password, reset password and register a new account by Email verification.
 > - Update personal information (name, password and avatar)
 > - Change permissions and delete user accounts with Admin.
->
-> * Below is the Demo link, if you find it interesting, please subscribe to the channel. I will be making a tutorial video in the near future. Thanks and have a good day!💓💓
 
 ## Demo:
 
 ## Author: Raju Ahammad
-
-## Youtube tutorials:
 
 ## Install dependencies for server
 
