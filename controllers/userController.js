@@ -150,6 +150,42 @@ const userController = {
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
+    },
+    updateUser: async (req, res) => {
+        try {
+            const {name, avator} = req.body
+
+            await Users.findOneAndUpdate({ _id: req.user.id }, {
+                name, avator
+            }) 
+
+            res.json({msg: "Update sucess"})
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+    updateUserRole: async (req, res) => {
+        try {
+            const { role } = req.body
+
+            await Users.findOneAndUpdate({ _id: req.params.id }, {
+                role
+            }) 
+
+            res.json({msg: "Update Role Sucess!"})
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+
+    deleteUser: async (req, res) => {
+        try {
+            await Users.findByIdAndDelete(req.params.id)
+
+            res.json({msg: "Delete Successs"})
+        } catch (err) {
+            return res.status(500).json({msg: res.message})
+        }
     }
 
 };
