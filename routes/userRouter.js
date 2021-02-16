@@ -31,3 +31,4 @@ router.delete('/delete/:id', auth, authAdmin, userController.deleteUser)
 
 
 module.exports = router;
+
