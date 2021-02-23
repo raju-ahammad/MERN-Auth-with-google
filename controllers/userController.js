@@ -177,7 +177,6 @@ const userController = {
             return res.status(500).json({msg: err.message})
         }
     },
-
     deleteUser: async (req, res) => {
         try {
             await Users.findByIdAndDelete(req.params.id)
@@ -186,7 +185,9 @@ const userController = {
         } catch (err) {
             return res.status(500).json({msg: res.message})
         }
-    }
+    },
+
+    
 
 };
 
