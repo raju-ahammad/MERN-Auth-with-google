@@ -1,10 +1,14 @@
 import React from 'react'
+import { Route, Switch } from 'react-router-dom'
+import Login from './login/Login'
 
 const Body = () => {
     return (
-        <div>
-            Body
-        </div>
+        <section>
+            <Switch>
+                <Route path="/login" component={ Login } exact />
+            </Switch>
+        </section>
     )
 }
 

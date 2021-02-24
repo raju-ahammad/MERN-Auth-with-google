@@ -19,3 +19,17 @@
   text-decoration: none;
   color: black;
 }
+
+.err {
+  background-color: red;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+.suc {
+  background-color: green;
+  color: white;
+  padding: 5px;
+  text-align: center;
+}

@@ -64,7 +64,9 @@ const userController = {
             const {email, password} = req.body
             const user = await Users.findOne({email})
             if(!user) return res.status(400).json({msg: "This email does not exist."})
-
+            if (password ==="") {
+                return res.status(400).json({ msg: "password is empty"})
+            }
             const isMatch = await bcrypt.compare(password, user.password)
             if(!isMatch) return res.status(400).json({msg: "Password is incorrect."})
 
