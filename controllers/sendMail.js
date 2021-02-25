@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 const {google} = require('googleapis');
-const {OAuth2} = google.auth;
+const OAuth2 = google.auth.OAuth2;
 
 const OAUTH_PALYGROUND = "https://developers.google.com/oauthplayground"
 
@@ -36,6 +36,9 @@ const sendEmail = (to, url, txt) => {
             accessToken
         }
     })
+    tls: {
+        rejectUnauthorized: false
+    }
 
     const mailOptions = {
         from : SENDER_EMAIL_ADRESS,
@@ -58,8 +61,10 @@ const sendEmail = (to, url, txt) => {
     }
 
     smtpTransPort.sendMail(mailOptions, (err, info) => {
-        if(err) return err;
-        return info
+        err ? console.log(err): console.log(info)
+        // if(err) return err;
+        // return info
+        smtpTransPort.close();
     })
 }
 

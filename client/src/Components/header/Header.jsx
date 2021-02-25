@@ -9,7 +9,7 @@ const Header = () => {
             <div className="header-list">
                 <ul>
                     <li> <Link to="/login" >Log in</Link> </li>
-                    <li> <Link to="/signin" >Sign up</Link> </li>
+                    <li> <Link to="/register" >Sign up</Link> </li>
                 </ul>
             </div>
         </header>
