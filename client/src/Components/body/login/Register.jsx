@@ -44,6 +44,7 @@ const Register = () => {
             setUser({...user, err: "", success: res.data.msg})
             console.log(res);
             
+            
         } catch (err) {
             err.response.data.msg && 
             setUser({...user, err: err.response.data.msg, success: ""})

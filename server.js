@@ -21,11 +21,12 @@ app.use(fileUpload({
 //Routes
 
 app.use('/user', require('./routes/userRouter'))
-app.use('/api', require('./routes/uploadRouter'))
+app.use('/api', require('./multer/route'))
 
 
 //connect mongodb
 const URI = process.env.MONGODB_URI
+
 
 mongoose.connect(URI, {
     useCreateIndex: true,
@@ -35,6 +36,7 @@ mongoose.connect(URI, {
 }, err => {
     if(err) throw err;
     console.log("connected to mongo db");
+  
 })
 
 const PORT = process.env.PORT || 5000;

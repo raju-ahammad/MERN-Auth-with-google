@@ -61,7 +61,7 @@ const sendEmail = (to, url, txt) => {
     }
 
     smtpTransPort.sendMail(mailOptions, (err, info) => {
-        err ? console.log(err): console.log(info)
+        err ? console.log(err): console.log(info);
         // if(err) return err;
         // return info
         smtpTransPort.close();
