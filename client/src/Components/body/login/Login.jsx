@@ -1,9 +1,12 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import { GoogleLogin } from 'react-google-login'
 import { useDispatch } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 import { disPatchLogin } from '../../redux/Actions/authActions'
 import { showErrorMessage, showSuccessMessage } from '../notification/Notification'
+
+
 
 const initialState = {
     email: "",
@@ -40,6 +43,22 @@ const Login = () => {
         }
     }
 
+    const responseGoogle = async (response) => {
+        try {
+            const res = await axios.post('/user/google_login', {tokenId: response.tokenId})
+
+            setUser({...user, error:'', success: res.data.msg})
+            localStorage.setItem('firstLogin', true)
+
+            dispatch(disPatchLogin())
+            history.push('/')
+        } catch (err) {
+            err.response.data.msg && 
+            setUser({...user, err: err.response.data.msg, success: ''})
+        }
+    }
+      
+
     return (
         <div className="mt-1">
     <div className="container">
@@ -69,7 +88,18 @@ const Login = () => {
             <h6> <Link to="/forgot_password">Forgot password</Link> </h6>
         </div>
         </form>
-        <h5> Dont have Account ? <Link to="/register"> Register </Link> </h5>
+        <div className="d-flex flex-column align-items-center">
+            <h5 className="text-center">Or login with</h5>
+            <div className=" btn ">
+            <GoogleLogin
+                    clientId="292133382625-le00gese8sfqu86nr2icsptpqhkjced5.apps.googleusercontent.com"
+                    buttonText="Login with google"
+                    onSuccess={responseGoogle}
+                    cookiePolicy={'single_host_origin'}
+                />
+            </div>
+        </div>
+        <h5> Don't have Account ? <Link to="/register"> Register </Link> </h5>
       </div>
     </div>
   </div>
