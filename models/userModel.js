@@ -20,6 +20,12 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0 // 0 = user , 1 = admin
     },
+    jobPosts : [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref:'JobPosts'
+        }
+    ],
     avator : {
         type: String,
         default: "https://res.cloudinary.com/dlywsncdd/image/upload/v1612908202/51f6fb256629fc755b8870c801092942_tmy0yx.png"

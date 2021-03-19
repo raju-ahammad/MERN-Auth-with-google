@@ -21,7 +21,8 @@ app.use(fileUpload({
 //Routes
 
 app.use('/user', require('./routes/userRouter'))
-app.use('/api', require('./multer/route'))
+app.use('/api', require('./jobPost/routes'))
+
 
 
 //connect mongodb
