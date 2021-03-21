@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
+import Jobbody from '../Jobpost/Jobbody/Jobbody'
 import ActivationMail from './login/ActivationMail'
 import EditUser from './login/EditUser'
 import ForgotPassword from './login/ForgotPassword'
@@ -16,6 +17,7 @@ const Body = () => {
     return (
         <section>
             <Switch>
+                <Route path="/" component={ Jobbody } exact/>
                 <Route path="/login" component={ isLogged ? NotFound : Login } exact />
                 <Route path="/register" component={isLogged ? NotFound : Register } exact />
                 <Route path="/forgot_password" component={ isLogged ? NotFound : ForgotPassword } exact />

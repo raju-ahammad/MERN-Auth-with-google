@@ -5,11 +5,9 @@ import App from './App';
 import DataProvider from './Components/redux/store';
 
 ReactDOM.render(
-  <React.StrictMode>
     <DataProvider>
       <App/>
-    </DataProvider>
-  </React.StrictMode>,
+    </DataProvider>,
   document.getElementById('root')
 );
 

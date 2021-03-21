@@ -24,7 +24,7 @@ const jobPostController = {
     },
     getAllJob: async (req, res) => {
         try {
-            const job = await JobPost.find().populate('user');
+            const job = await JobPost.find().sort({ createdAt: 'desc'}).populate('user');
             res.json(job)
         } catch (err) {
             return res.status(500).json({msg: err.message}) 

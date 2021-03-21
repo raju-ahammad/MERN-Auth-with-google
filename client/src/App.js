@@ -1,3 +1,4 @@
+import { ThemeProvider } from '@material-ui/core'
 import axios from 'axios'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -6,6 +7,7 @@ import './app.css'
 import Body from './Components/body/Body'
 import Header from './Components/header/Header'
 import { dispatchGetUser, disPatchLogin, fetchUser } from './Components/redux/Actions/authActions'
+import theme from "./Components/theme/theme"
 
 
 const App = () => {
@@ -43,10 +45,14 @@ const App = () => {
   }, [token, dispatch])
 
   return (
-   <Router>
-     <Header/>
-     <Body/>
-   </Router>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <Header/>
+        <Body/>
+        
+      </Router>
+    </ThemeProvider>
+   
   )
 }
 

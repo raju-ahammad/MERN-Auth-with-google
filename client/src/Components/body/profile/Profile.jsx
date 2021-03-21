@@ -147,9 +147,9 @@ const Profile = () => {
                     <h2 className="text-center">{isAdmin ? "Admin Profile": "User Profile"}</h2>
                     <div className="avator position-relative text-center">
                         <img style={{ width: "100px" }} src={ avator ? avator : user.avator } alt=""/>
-                        <span style={{ bottom: "11px", right: "120px" }}  className="position-absolute right-4">
+                        {/* <span style={{ bottom: "11px", right: "120px" }}  className="position-absolute right-4">
                              <input style={{ width: "4rem", outline: "none", borderStyle: "none" }} onChange={changeAvatar} type="file" name="file" id="file_upload"/>
-                        </span>
+                        </span> */}
                     </div>
                     <div className="mb-3">
                         <label htmlFor="name" className="form-label">Name</label>
@@ -168,11 +168,7 @@ const Profile = () => {
                         <label htmlFor="cf_password" className="form-label">Confirm Password</label>
                         <input type="password" value={cf_password} onChange={handleChange} className="form-control" id="cf_password"  /> 
                     </div>
-                    <div>
-                        <em style={{color: "crimson"}}>
-                            if you update your password here, you will not able to login in quickly using google and facebook
-                        </em>
-                    </div>
+                    
                     <button className="btn btn-primary  ml-5" onClick={handleUpdate} disabled={loading} >Update</button>
                    
                 </div>
