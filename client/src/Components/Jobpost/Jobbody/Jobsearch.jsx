@@ -25,6 +25,8 @@ const Search = ({fetchJobSearchData, openJobPost}) => {
     const [jobSearch, setJobSearch] = useState(initialState)
     const [loading, setLoading] = useState(false)
 
+    console.log("search", jobSearch);
+
     const auth = useSelector(state => state.auth)
     const { isLogged } = auth
     
