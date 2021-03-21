@@ -19,7 +19,7 @@ const Profile = () => {
     const [data, setData] = useState(initialState)
     const [avator, setAvator] = useState(false)
     const [loading, setLoading] = useState(false)
-    const [callback, setCallback] = useState(false)
+    const [call, setCall] = useState(false)
 
     const dispatch = useDispatch()
     const auth = useSelector(state => state.auth)
@@ -35,7 +35,7 @@ const Profile = () => {
                 dispatch(dispatchGetAllUsers(res))
             })
         }
-    }, [token, isAdmin, dispatch, callback])
+    }, [token, isAdmin, dispatch, call])
 
    
     const handleChange = (e) => {
@@ -126,7 +126,7 @@ const Profile = () => {
                         headers: {Authorization: token}
                     })
                     setLoading(false)
-                    setCallback(!callback)
+                    setCall(!call)
                 }
             }
         } catch (err) {

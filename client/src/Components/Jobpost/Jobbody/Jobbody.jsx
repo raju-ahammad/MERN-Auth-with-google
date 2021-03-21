@@ -3,6 +3,7 @@ import { Close } from '@material-ui/icons'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import JobPostModal from '../JobForm/JobPostModal'
+import JobUpdate from '../JobForm/JobUpdate'
 import Jobcard from './Jobcard'
 import JobDetails from './JobDetails'
 import JobSearch from './Jobsearch'
@@ -12,6 +13,7 @@ const Jobbody = () => {
     const [loading, setLoading] = useState(false)
     const [jobPostOpen, setJobPostOpen] = useState(false)
     const [customJobSearch, setCustomJobSearch] = useState(false)
+    const [jobUpdateOpne, setJobUpdateOpne] = useState(false)
 
 
     const fetchJobData = async () => {
@@ -45,7 +47,8 @@ const Jobbody = () => {
         <Box px={4}>
             <JobSearch fetchJobSearchData={fetchJobSearchData} openJobPost={()=>setJobPostOpen(true)}/>
             <JobPostModal jobPostOpen={jobPostOpen} closejobPost={()=>setJobPostOpen(false)} fetchJobData={fetchJobData} />
-            <JobDetails job={jobDetails} closeDialog={()=> setJobDetails({})} />
+            <JobDetails job={jobDetails} closeDialog={()=> setJobDetails({})} jobUpdateOpen={()=> setJobUpdateOpne(true)} />
+            <JobUpdate closeDialog={()=> setJobDetails({})} fetchJobData={fetchJobData} closeJobUpdate = {() => setJobUpdateOpne(false)} openJobupdate={jobUpdateOpne} jobInfo={jobDetails} />
            {
                loading 
                ? <CircularProgress />
