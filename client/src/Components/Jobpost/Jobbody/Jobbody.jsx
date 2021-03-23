@@ -1,46 +1,46 @@
 import { Box, Button, CircularProgress } from '@material-ui/core'
 import { Close } from '@material-ui/icons'
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { dispatchGetJobs, fetchAllJobs } from '../../redux/Actions/jobsAction'
 import JobPostModal from '../JobForm/JobPostModal'
 import JobUpdate from '../JobForm/JobUpdate'
 import Jobcard from './Jobcard'
 import JobDetails from './JobDetails'
 import JobSearch from './Jobsearch'
 const Jobbody = () => {
-    const [jobs, setJobs] = useState([])
+    const [searchJobs, setSearchJobs] = useState([])
     const [jobDetails, setJobDetails] = useState({})
     const [loading, setLoading] = useState(false)
     const [jobPostOpen, setJobPostOpen] = useState(false)
     const [customJobSearch, setCustomJobSearch] = useState(false)
     const [jobUpdateOpne, setJobUpdateOpne] = useState(false)
 
+    const jobPosts = useSelector(state => state.jobPosts)
+    const dispatch = useDispatch()
 
-    const fetchJobData = async () => {
-        try {
-            setCustomJobSearch(false)
-            setLoading(true)
-            const res = await axios.get('/api/')
-            setJobs(res.data)
-            setLoading(false)
-        } catch (err) {
-            console.log(err.message);
-        }
+    const {jobs, isLoading} = jobPosts
+
+
+    const fetchJobData = () => {
+        setCustomJobSearch(false)
+        fetchAllJobs().then(res => {
+            dispatch(dispatchGetJobs(res))
+        })
+        
     }
 
     const fetchJobSearchData = (jobSearch) => {
         setLoading(true)
-        setJobs(jobs.filter((job) => job.type === jobSearch.type && job.location === jobSearch.location))
+        setSearchJobs(jobs.filter((job) => job.type === jobSearch.type && job.location === jobSearch.location))
         setLoading(false)
         setCustomJobSearch(true)
     }
 
-    
-
     useEffect(() => {
         fetchJobData()
     }, [])
-    console.log(jobs);
+ 
 
     
     return (
@@ -49,30 +49,49 @@ const Jobbody = () => {
             <JobPostModal jobPostOpen={jobPostOpen} closejobPost={()=>setJobPostOpen(false)} fetchJobData={fetchJobData} />
             <JobDetails job={jobDetails} closeDialog={()=> setJobDetails({})} jobUpdateOpen={()=> setJobUpdateOpne(true)} />
             <JobUpdate closeDialog={()=> setJobDetails({})} fetchJobData={fetchJobData} closeJobUpdate = {() => setJobUpdateOpne(false)} openJobupdate={jobUpdateOpne} jobInfo={jobDetails} />
-           {
-               loading 
-               ? <CircularProgress />
-               : (
-                   <>
-                        {
-                            customJobSearch && 
-                            (
-                                <Box>
-                                    <Button onClick={fetchJobData}>
-                                        <Close size={20} />
-                                        Custom Search
-                                    </Button>
-                                </Box>
-                            )
-                        }
-                        {
-                            jobs.map((job) => (
-                                <Jobcard key={job._id} {...job} opneDialog={()=>setJobDetails(job)}/>
-                            ))
-                        }
-                   </>
-               ) 
-           }
+            {
+                !isLoading
+                ? <CircularProgress/>
+                : (
+                    <>
+                    {
+                        customJobSearch 
+                        ? (
+                            <>
+                                {
+                                    loading 
+                                    ? <CircularProgress/> 
+                                    : (
+                                        <>
+                                        <Box>
+                                            <Button onClick={()=>fetchJobData()}>
+                                                <Close size={20} />
+                                                Custom Search
+                                            </Button>
+                                        </Box>
+                                        {
+                                            searchJobs.map((job) => (
+                                                <Jobcard key={job._id} {...job} opneDialog={()=>setJobDetails(job)}/>
+                                            ))
+                                        }
+                                        </>
+                                    )
+                                }
+                            </>
+                        )
+                        : (
+                            <>
+                                {
+                                    jobs.map((job) => (
+                                        <Jobcard key={job._id} {...job} opneDialog={()=>setJobDetails(job)}/>
+                                    ))
+                                }
+                            </>
+                        )
+                    }
+                    </>
+                )
+            }
         </Box>
     )
 }

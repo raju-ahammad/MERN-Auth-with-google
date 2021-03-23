@@ -1,7 +1,7 @@
 const Users = require('../models/userModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
-const sendMail = require('./sendMail');
+const sendMail = require('./sendEmail');
 const { reset } = require('nodemon');
 const {google} = require('googleapis');
 const OAuth2 = google.auth.OAuth2;

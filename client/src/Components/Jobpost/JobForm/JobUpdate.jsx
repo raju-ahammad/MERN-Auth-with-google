@@ -40,13 +40,17 @@ const initialState = {
 }
 
 const JobUpdate = ({openJobupdate, closeJobUpdate, fetchJobData, jobInfo, closeDialog}) => {
+
     const [postUpdate, setPostUpdate] = useState(initialState)
     const [loading, setLoading] = useState(false)
 
     const token = useSelector(state => state.token)
 
+
+
     const { title, type, location, companyName, companyUrl, link, desccription, skills } = postUpdate
     console.log(jobInfo);
+    
 
     const handleChange = (e) => {
         const {name, value} = e.target
@@ -59,8 +63,8 @@ const JobUpdate = ({openJobupdate, closeJobUpdate, fetchJobData, jobInfo, closeD
 
     const addRemoveSkills = (skill) => {
         postUpdate.skills.includes(skill)
-        ? setPostUpdate({...postUpdate, skills: postUpdate.skills.filter((s) => s !== skill)})
-        : setPostUpdate({...postUpdate, skills: postUpdate.skills.concat(skill)})
+        ? setPostUpdate({...jobInfo, skills: postUpdate.skills.filter((s) => s !== skill)})
+        : setPostUpdate({...jobInfo, skills: postUpdate.skills.concat(skill)})
     }
 
     const closeModal = () => {
@@ -69,7 +73,6 @@ const JobUpdate = ({openJobupdate, closeJobUpdate, fetchJobData, jobInfo, closeD
         closeJobUpdate()
     }
     const id = jobInfo._id
-    console.log("Id",id);
     const jobPostUpdate = async () => {
         try {
             const res = await axios.put(`api/update/${id}`, 
