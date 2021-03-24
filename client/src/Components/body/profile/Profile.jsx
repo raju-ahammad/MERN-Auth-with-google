@@ -63,8 +63,10 @@ const Profile = () => {
             console.log(formData);
 
             setLoading(true)
-            const res = await axios.post('/api/upload', formData, {
-                headers: {'content-type': 'multipart/form-data', Authorization: token}
+            const res = await axios.post('/cv/image', formData, {
+                headers: {'content-type': 'multipart/form-data',
+                Authorization: token
+                }
             })
             console.log(res);
 
@@ -73,6 +75,8 @@ const Profile = () => {
             
         } catch (err) {
             setData({...data, err: err.response.data.msg , success: ''})
+            console.log(err.response.data.msg);
+            setLoading(false)
         }
     }
 
@@ -114,7 +118,7 @@ const Profile = () => {
 
     const handleUpdate = () => {
         if (name || password) updateInfo()
-        if (avator) updatePassword()
+        //if (avator) updatePassword()
     }
 
     const handledelete = async (id) => {
@@ -147,9 +151,9 @@ const Profile = () => {
                     <h2 className="text-center">{isAdmin ? "Admin Profile": "User Profile"}</h2>
                     <div className="avator position-relative text-center">
                         <img style={{ width: "100px" }} src={ avator ? avator : user.avator } alt=""/>
-                        {/* <span style={{ bottom: "11px", right: "120px" }}  className="position-absolute right-4">
+                        <span style={{ bottom: "11px", right: "120px" }}  className="position-absolute right-4">
                              <input style={{ width: "4rem", outline: "none", borderStyle: "none" }} onChange={changeAvatar} type="file" name="file" id="file_upload"/>
-                        </span> */}
+                        </span>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="name" className="form-label">Name</label>
