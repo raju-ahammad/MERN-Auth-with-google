@@ -73,6 +73,9 @@ const JobUpdate = ({openJobupdate, closeJobUpdate, fetchJobData, jobInfo, closeD
         closeJobUpdate()
     }
     const id = jobInfo._id
+    console.log("Skill Length",skills.length);
+    const skillLength = skills.length === 0
+    console.log(skillLength);
     const jobPostUpdate = async () => {
         try {
             const res = await axios.put(`api/update/${id}`, 
@@ -83,7 +86,7 @@ const JobUpdate = ({openJobupdate, closeJobUpdate, fetchJobData, jobInfo, closeD
               companyUrl: companyName ? companyUrl : jobInfo.companyUrl, 
               link: link ? link:jobInfo.link, 
               desccription: desccription ? desccription:jobInfo.desccription, 
-              skills: skills ? skills: jobInfo.skills 
+              skills: skillLength ? jobInfo.skills: skills
             }, 
             
             {

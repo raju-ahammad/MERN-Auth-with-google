@@ -4,17 +4,31 @@ const mongoose = require('mongoose')
 const CvSchema = new mongoose.Schema({
     name: {
         type: String,
+        required: true,
         trim: true
     },
-    file_path: {
+    image: {
         type: String,
-        required: true
+    },
+    aboutMe: {
+        type: String,
+        trim: true
+    },
+    contact:{
+        address: {
+            type: String,
+            trim: true
+        },
+        phone:{
+            type: String,
+            trim: true
+        }
     }
 
 },{
     timestamps: true
 })
 
-const CvImage = mongoose.model('CvImage', fileSchema);
+const CV = mongoose.model('CV', CvSchema);
 
-module.exports = CvImage;
+module.exports = CV;

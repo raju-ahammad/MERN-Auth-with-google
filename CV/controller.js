@@ -1,10 +1,16 @@
+const CV = require("./models")
 
 const cvController = {
-    imageUpload: (req,res) => {
-        console.log("Contrl");
-        res.json({
-            message: "success"
-        })
+    cvCreate: async (req, res) => {
+        try {
+            const cvPost = new CV(req.body)
+            console.log(cvPost);
+            await cvPost.save()
+            res.json(cvPost)
+        } catch (err) {
+            return res.status(500).json({msg: err.message}) 
+        }
+
     }
 }
 
