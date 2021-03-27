@@ -143,7 +143,7 @@ const userController = {
     },
     getAlluserInfo: async (req, res) => {
         try {
-            const users = await Users.find().select('-password').populate('jobPosts')
+            const users = await Users.find().select('-password').populate('cv').populate('jobPosts')
             res.json(users)
         } catch (err) {
             return res.status(500).json({msg: err.message})

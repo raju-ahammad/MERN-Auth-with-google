@@ -1,5 +1,6 @@
 const JobPost = require('./models')
 const Users = require('../models/userModel');
+const sendMail = require('./sendMail')
 
 const jobPostController = {
     jobPost: async (req, res) => {
@@ -10,8 +11,16 @@ const jobPostController = {
                 ...req.body,
                 user: userId
             })
-            console.log(post);
+            console.log(post.skills);
             await post.save();
+            const usersEmail = []
+            const user = await Users.find()
+            
+            user.forEach(i => {
+                console.log(i.email);
+                usersEmail.push(i.email)
+            })
+            sendMail(usersEmail)
 
             const userById = await Users.findById(userId);
             userById.jobPosts.push(post)

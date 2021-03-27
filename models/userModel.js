@@ -26,6 +26,10 @@ const userSchema = new mongoose.Schema({
             ref:'JobPosts'
         }
     ],
+    cv : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'CV'
+    },
     avator : {
         type: String,
         default: "https://res.cloudinary.com/dlywsncdd/image/upload/v1612908202/51f6fb256629fc755b8870c801092942_tmy0yx.png"

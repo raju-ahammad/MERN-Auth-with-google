@@ -20,7 +20,7 @@ app.use(fileUpload({
 
 app.use('/user', require('./routes/userRouter'))
 app.use('/api', require('./jobPost/routes'))
-app.use('/cv', require('./routes/uploadRouter'))
+app.use('/userImage', require('./routes/uploadRouter'))
 app.use('/usercv', require('./CV/routes'))
 
 
