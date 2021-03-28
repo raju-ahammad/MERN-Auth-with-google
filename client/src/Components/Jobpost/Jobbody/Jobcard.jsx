@@ -1,6 +1,7 @@
 import { Box, Button, Grid, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import Moment from 'react-moment';
+import { Link } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
     // wrapper: {
     //     border: '1px solid #e8e8e8',
@@ -12,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: ' 0px 1px 5px rgba(0,0,0,0.1)',
         borderRadius: '5px',
         cursor: "pointer"
+
        
     },
     companyName: {
@@ -39,42 +41,50 @@ const Jobcard = (props) => {
     const classes = useStyles()
     const {createdAt} = props
     const open = props.opneDialog
+    const id = props._id
     
     
     return (
-        <Box p={2} mt={2} className={classes.wrapper} onClick={open}>
-            <Grid container alignItems="center">
-                <Grid item xs>
-                    <Typography variant="subtitle1">
-                        {props.title}
-                    </Typography>
-                    <Typography>{props.user.name}</Typography>
-                    <Typography className={classes.companyName} variant="subtitle2">
-                        {props.companyName}
-                    </Typography>
-                </Grid>
-                <Grid item container xs>
-                    {
-                        props.skills.map((skil, index) => (
-                            <Grid key={index} item>
-                                <Typography className={classes.skill}>{ skil }</Typography>
-                            </Grid>
-                        ))
-                    }
+        <Box p={2} mt={2}  onClick={open}>
+            <Link style={{ textDecoration:"none", color:"black" }} to={`/jobdetails/${id}`}>
+                <Box p={2} mt={2} className={classes.wrapper}>
+                <Grid container alignItems="center">
                     
+                    <Grid item xs>
+                        <Typography variant="subtitle1">
+                            {props.title}
+                        </Typography>
+                        <Typography>{props.user.name}</Typography>
+                        <Typography className={classes.companyName} variant="subtitle2">
+                            {props.companyName}
+                        </Typography>
+                    </Grid>
+                    <Grid item container xs>
+                        {
+                            props.skills.map((skil, index) => (
+                                <Grid key={index} item>
+                                    <Typography className={classes.skill}>{ skil }</Typography>
+                                </Grid>
+                            ))
+                        }
+                        
+                        
+                    </Grid>
                     
-                </Grid>
-                <Grid item container direction="column" alignItems="flex-end" xs>
-                    <Grid item>
-                        <Typography variant="caption"><Moment fromNow>{createdAt}</Moment> ago | {props.location}</Typography>
+                    <Grid item container direction="column" alignItems="flex-end" xs>
+                        <Grid item>
+                            <Typography variant="caption"><Moment fromNow>{createdAt}</Moment> ago | {props.location}</Typography>
+                        </Grid>
+                        <Grid item>
+                            <Box mt={2}>
+                                <Button variant="outlined" >Save</Button>
+                            </Box>
+                        </Grid>
                     </Grid>
-                    <Grid item>
-                        <Box mt={2}>
-                            <Button variant="outlined" >Save</Button>
-                        </Box>
-                    </Grid>
                 </Grid>
-            </Grid>
+                </Box>
+                
+            </Link>
         </Box>
     )
 }

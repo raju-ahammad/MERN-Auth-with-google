@@ -78,6 +78,7 @@ const Header = () => {
                     </Typography>
                     <Typography > 
                         <Link className={classes.link} to="/">Home</Link>
+                        <Link className={classes.link} to="/dashboard">Dashboard</Link>
                     </Typography>
                     
                 </Box>
@@ -110,8 +111,8 @@ const Header = () => {
                                 onClose={handleClose}
                             >
                                 <MenuItem onClick={handleClose}><Link to='/profile' className={classes.iconLink}>Profile</Link> </MenuItem>
-                                <MenuItem onClick={handleClose}><Link className={classes.iconLink} to='/profile'>My Acount</Link></MenuItem>
-                                <MenuItem onClick={handleClose}><Link className={classes.iconLink} to='/profile'>DashBoard</Link></MenuItem>
+                                <MenuItem onClick={handleClose}><Link className={classes.iconLink} to='/dashboard'>My Acount</Link></MenuItem>
+                                <MenuItem onClick={handleClose}><Link className={classes.iconLink} to='/dashboard'>DashBoard</Link></MenuItem>
                                 <MenuItem onClick={handleClose}><Link className={classes.iconLink} onClick={handleLogout} to='/'>Logout</Link></MenuItem>
                             </Menu>
                         </Box>

@@ -1,0 +1,40 @@
+.App {
+  box-sizing: border-box;
+}
+
+.react-tabs {
+  display: flex;
+  color: black;
+}
+
+.react-tabs__tab-list {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  margin: 0;
+  padding: 0;
+  color: black;
+}
+
+.react-tabs__tab {
+  list-style: none;
+  padding: 12px 6px;
+  cursor: pointer;
+}
+
+.react-tabs__tab--selected {
+  border-right: 4px solid #1a237e;
+}
+
+.react-tabs__tab-panel--selected {
+  display: block;
+  width: 100%;
+}
+
+.react-tabs__tab {
+  margin-left: 34px;
+}
+
+.panel-content {
+  padding: 0px 50px;
+}
