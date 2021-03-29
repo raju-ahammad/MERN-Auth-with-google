@@ -2,7 +2,6 @@ import { ThemeProvider } from '@material-ui/core'
 import axios from 'axios'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { BrowserRouter as Router } from 'react-router-dom'
 import './app.css'
 import Body from './Components/body/Body'
 import Header from './Components/header/Header'
@@ -46,11 +45,10 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Router>
+    
         <Header/>
         <Body/>
-        
-      </Router>
+      
     </ThemeProvider>
    
   )

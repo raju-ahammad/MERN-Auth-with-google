@@ -42,6 +42,7 @@ const Jobcard = (props) => {
     const {createdAt} = props
     const open = props.opneDialog
     const id = props._id
+  
     
     
     return (

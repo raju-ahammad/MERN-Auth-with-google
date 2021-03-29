@@ -83,7 +83,7 @@ const Jobbody = () => {
                             <>
                                 {
                                     jobs.map((job) => (
-                                        <Jobcard key={job._id} {...job} to={`/jobdetails/:job._id`} />
+                                        <Jobcard key={job._id} {...job} />
                                     ))
                                 }
                             </>

@@ -27,9 +27,11 @@ const Body = () => {
                 <Route path="/user/reset/:token" component={ isLogged ? NotFound : ResetPassword } exact />
                 <Route path="/edit_user/:id" component={ isAdmin ? EditUser : NotFound } exact />
                 <Route path="/user/activate/:activation_token" component={ ActivationMail } exact />
-                <Route path="/dashboard" component={ isLogged ? DashBoard : NotFound} exact />
+                <Route path="/dashboard" component={ isLogged ? DashBoard : NotFound} />
                 <Route path="/jobdetails/:jobid" component={ JobDescription } exact />
             </Switch>
+         
+            
         </section>
     )
 }

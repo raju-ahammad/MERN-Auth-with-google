@@ -24,7 +24,7 @@ const JobDescription = () => {
     const {companyName, companyUrl, createdAt, desccription, link, location, skills, title, type, updatedAt, user} = jobDetails
 
     console.log("details",jobDetails);
-    const img = user.avator
+    const img = user ? user.avator : ""
 
 
     return (

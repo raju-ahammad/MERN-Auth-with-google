@@ -1,59 +1,42 @@
-import { Typography } from '@material-ui/core';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import DescriptionIcon from '@material-ui/icons/Description';
+import { Box, Grid, Typography } from '@material-ui/core';
 import React from 'react';
-import { BrowserRouter as Router, Link, Route, useLocation } from 'react-router-dom';
-import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
+import { NavLink, Route, useLocation, useRouteMatch } from "react-router-dom";
 import UserCv from './Cv/UserCv';
 import UserProfile from './Profile/UserProfile';
-import './styles.css';
+//import './styles.css';
 import UserDashboard from './UserDashboard/UserDashboard';
 
 
-
 const DashBoard = () => {
+    const {url, path} = useRouteMatch()
+    const loc = useLocation().pathname
 
-    const location = useLocation()
-    const path = location.pathname
-    console.log(path);
+    console.log(loc);
+    const style = {
+        fontWeight: "bold",
+        color: "red"
+      }
+
+    const isPath = url === loc
+    console.log("Path true", isPath);  
+    
     return (
-        <Router>
-        <div className="App">
-            <Tabs>
-                <TabList>
-                <Tab>
-                <Link to={`${path}`}> <Typography variant="subtitle1"> <DashboardIcon/>  DashBoard  </Typography></Link>
-                </Tab>
-                
-                <Tab>
-                <Link to={`${path}/profile`}>  <Typography variant="subtitle1"> <AccountCircleIcon/> Profile  </Typography></Link>
-                </Tab>
-                <Tab>
-                <Link to={`${path}/cv`}> <Typography variant="subtitle1"> <DescriptionIcon/>  CV  </Typography></Link>
-                </Tab>
-                
-                </TabList>
-                <TabPanel>
-                    <div className="panel-content">
-                        <Route path={`${path}`} component={UserDashboard} />
-                    </div>
-                </TabPanel>
-
-                <TabPanel>
-                <div className="panel-content">
-                    <Route path={`${path}/profile`} component={UserProfile} />
-                </div>
-                </TabPanel>
-                <TabPanel>
-                <div className="panel-content">
-                    <Route path={`${path}/cv`} component={UserCv}/>
-                </div>
-                </TabPanel>
-                
-            </Tabs>
-        </div>
-        </Router>
+        <Box>
+            <Grid container>
+                <Grid item xs={3}>
+                    <Box p={3}>
+                        <Typography><NavLink to={`${url}`} activeStyle={ isPath ? style : "" }> Dashboard </NavLink></Typography>
+                        <Typography><NavLink to={`${url}/userprofile`} activeStyle={style} > Profile </NavLink></Typography>
+                        <Typography><NavLink to={`${url}/cv`} activeStyle={style} > CV </NavLink></Typography>
+                    </Box>
+                </Grid>
+                <Grid item xs={9}>
+                    <Route path={`${url}`} exact component={UserDashboard} />
+                    <Route path={`${url}/userprofile`} component={UserProfile} />
+                    <Route path={`${url}/cv`} component={UserCv} />
+                </Grid>
+            </Grid>
+        </Box>
     )
 }
 

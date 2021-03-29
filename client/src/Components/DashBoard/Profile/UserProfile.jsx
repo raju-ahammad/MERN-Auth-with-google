@@ -1,6 +1,7 @@
 import { Box, makeStyles, Typography } from '@material-ui/core'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import Jobcard from '../../Jobpost/Jobbody/Jobcard'
 
 const useStyles = makeStyles((theme) => ({
@@ -43,11 +44,11 @@ const UserProfile = () => {
         <div>
             <Box className={classes.wrapper}>
                 <Box className={classes.upperBox}>
-
                 </Box>
                 <img className={classes.imag} src={ user.avator } alt=""/>
                 <Box className={classes.userInfo}>
                     <Typography variant="h6">{ user.name }</Typography>
+                    <Link to="/">Home</Link>
                     {/* <Typography>{ user.cv.education ? user.cv.education.univarsityName: "" }</Typography> */}
 
                 </Box>
@@ -60,7 +61,7 @@ const UserProfile = () => {
             {
                 !isUser  
                 ? jobs.map((job) => (
-                    <Jobcard key={job._id} {...job} opneDialog={()=>setJobDetails(job)} />
+                    <Jobcard key={job._id} {...job} />
                 ))
                 : "Loading ..."
             }
