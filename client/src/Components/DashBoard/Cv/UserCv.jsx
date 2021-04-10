@@ -2,7 +2,9 @@ import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
 import { EmailOutlined, Facebook, LinkedIn } from '@material-ui/icons';
 import CallIcon from '@material-ui/icons/Call';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import image from '../Cv/Raju.jpg';
 
 const useStyles = makeStyles((theme) => ({
@@ -43,15 +45,41 @@ const useStyles = makeStyles((theme) => ({
 
 }))
 
+
 const UserCv = () => {
+
+    const [cvData, setCvData] = useState({})
+    const [loading, setLoading] = useState(false)
+
+    const auth = useSelector(state => state.auth)
+    const {user, isLogged} = auth
+    const cvId = user ? user.cv ? user.cv._id : user.cv : 1;
+    console.log("cv user",cvId);
+ 
+    const fetchCv = async () => {
+        const res = await axios.get(`/usercv/getcv/${cvId}`)
+        
+        setCvData(res.data)
+        setLoading(true)
+    }
+
+    useEffect(() => {
+        fetchCv()
+    }, [isLogged, cvId])
+
+    console.log("cv Data",cvData);
+    const { aboutMe, career, contact, education, name, skills } = cvData
+    
+
     const classes = useStyles()
+
     
 
     return (
         <Box className={classes.wrapper}>
             <Box textAlign="center" className={classes.imageWrapper}>
                 <img className={classes.image} src={image} alt=""/>
-                <Typography variant="h5" className={classes.title}>Raju Ahammad</Typography>
+                <Typography variant="h5" className={classes.title}>{name}</Typography>
                 <Typography className={classes.title}>Full Stack Developer</Typography>
             </Box>
 
@@ -63,7 +91,7 @@ const UserCv = () => {
                             About Me
                         </Typography>
                         <Typography>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                        { aboutMe }
                         </Typography>
                         <Typography variant="h6" >Contact</Typography>
                         <Typography > <LocationOnIcon/>   Location</Typography>
