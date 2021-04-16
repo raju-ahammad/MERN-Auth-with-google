@@ -1,12 +1,18 @@
-# MERN Stack - Authentication with google auth
-
-> I have perfected the user authentication page using the MERN Stack + Redux.
+# MERN Stack - a job up 
+> Here i implement this feature
 > Include:
->
+> 
 > - Register, login with validation form.
 > - Quick login with Google.
 > - Forgot password, reset password and register a new account by Email verification.
 > - Update personal information
+> - Job search
+> - create cv
+> - create user profile.
+> - job post
+> - job listing.
+> - update cv and job post
+> 
 
 ## Author: Raju Ahammad
 
